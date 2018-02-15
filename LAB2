@@ -1,0 +1,61 @@
+-- drops all the table
+drop table orderLine;
+drop table orders;
+drop table customers;
+drop table products;
+ 
+
+CREATE TABLE customers (
+    customerNumber int not null,
+    customerName varchar(20) not null,
+    customerfirst varchar(20) not null,
+    customerlast varchar(20) not null,
+    phone varchar(20) not null,
+    street varchar(50),
+    zipcode varchar(50),
+    constraint customer_pk primary key (customerNumber) 
+);
+
+CREATE TABLE orders (
+    orderNumber int not null,
+    customerNumber int not null,
+    orderDate Date not null,
+    soldDate date not null,
+    constraint orders_pk primary key (orderNumber),
+    constraint orders_fk foreign key (customerNumber)
+    references customers (customerNumber)
+);
+
+CREATE TABLE products (
+    productCode int not null,
+    productName varchar(35) not null,
+    unitListPrice decimal(10,2) not null,
+    unitsInStock smallint not null,
+    MSRP decimal(10,2) not null,
+    constraint products_pk primary key (productCode)
+);
+
+CREATE TABLE orderLine (
+    orderNumber int not null,
+    productCode int not null,
+    quantity int not null,
+    unitSalePrice decimal(10,2),
+    constraint orderLine_pk primary key (orderNumber, productCode),
+    constraint orderLine_fk foreign key (orderNumber)
+    references orders (orderNumber),
+    constraint products_fk foreign key (productCode)
+    references products (productCode)
+);
+
+--select statement to see the table Note: no data
+select * from customers;
+select * from orders;
+select * from products;
+select * from orderLine;
+
+
+
+
+
+
+
